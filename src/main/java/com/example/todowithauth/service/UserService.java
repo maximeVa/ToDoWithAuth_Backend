@@ -1,9 +1,10 @@
 package com.example.todowithauth.service;
 
-import com.example.todowithauth.model.User;
 import com.example.todowithauth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,14 +13,16 @@ public class UserService {
   @Autowired
   private UserRepository userRepository;
 
-  @Autowired
-  private PasswordEncoder passwordEncoder;
-
-  public void registerUser(String name, String email, String password) {
-    String hashedPassword = passwordEncoder.encode(password);
-    User user = new User(name, email, hashedPassword);
-    userRepository.save(user);
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    com.example.todowithauth.model.User user = userRepository.findByUsername(username);
+    if (user == null) {
+      throw new UsernameNotFoundException("Utilisateur non trouvé avec le nom d'utilisateur: " + username);
+    }
+    return User.withUsername(user.getUsername())
+        .password(user.getPassword())
+        .roles(/* Ajoute les rôles de l'utilisateur ici si nécessaire */)
+        .build();
   }
 
-  // ... other user management methods (optional)
+  // Autres méthodes de gestion des utilisateurs (optionnelles)...
 }
