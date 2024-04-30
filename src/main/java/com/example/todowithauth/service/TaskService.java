@@ -17,10 +17,15 @@ public class TaskService {
     this.taskRepository = taskRepository;
   }
 
-  // Add methods to interact with TaskRepository as needed, such as:
   public List<Task> getAllTasks() {
     return taskRepository.findAll();
   }
 
-  // Other methods like saveTask(), updateTask(), deleteTask(), etc.
+  public Task saveTask(Task task) {
+    return taskRepository.save(task);
+  }
+
+  public void deleteTask(Long id) {
+    taskRepository.deleteById(id);
+  }
 }

@@ -18,6 +18,4 @@ public class Task {
 
   @Column(nullable = false)
   private boolean completed;
-
-  // Constructors, getters, setters, and other methods
 }

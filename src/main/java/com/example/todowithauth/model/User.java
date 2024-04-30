@@ -32,6 +32,4 @@ public class User {
     this.email = email;
     this.password = password; // Remember, password should be hashed before saving
   }
-
-  // ... other attributes and relationships (optional)
 }
