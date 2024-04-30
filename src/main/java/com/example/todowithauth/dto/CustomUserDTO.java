@@ -12,6 +12,4 @@ public class CustomUserDTO {
   private Long id;
   private String username;
   private String email;
-
-  // Constructeurs, getters, setters et autres méthodes
 }

@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomUser {
+  public class CustomUser {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
