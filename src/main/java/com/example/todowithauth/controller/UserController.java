@@ -1,6 +1,6 @@
 package com.example.todowithauth.controller;
 
-import com.example.todowithauth.model.User;
+import com.example.todowithauth.dto.CustomUserDTO;
 import com.example.todowithauth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +15,12 @@ public class UserController {
   private UserService userService;
 
   @GetMapping("/")
-  public List<User> getAllUsers() {
+  public List<CustomUserDTO> getAllUsers() {
     return userService.getAllUsers();
   }
 
   @PostMapping("/")
-  public User createUser(@RequestBody User user) {
-    return userService.saveUser(user);
+  public CustomUserDTO createUser(@RequestBody CustomUserDTO userDTO) {
+    return userService.saveUser(userDTO);
   }
 }

@@ -1,11 +1,11 @@
 package com.example.todowithauth.repository;
 
-import com.example.todowithauth.model.User;
+import com.example.todowithauth.model.CustomUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<CustomUser, Long> {
 
-  User findByEmail(String email); // Optional method to find user by email
+  CustomUser findByEmail(String email); // Optional method to find user by email
 
-  User findByUsername(String username);
+  CustomUser findByUsername(String username);
 }

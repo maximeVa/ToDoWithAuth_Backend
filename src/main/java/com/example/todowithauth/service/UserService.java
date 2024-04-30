@@ -1,12 +1,16 @@
 package com.example.todowithauth.service;
 
+import com.example.todowithauth.dto.CustomUserDTO;
+import com.example.todowithauth.model.CustomUser;
 import com.example.todowithauth.repository.UserRepository;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -15,7 +19,7 @@ public class UserService {
   private UserRepository userRepository;
 
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    com.example.todowithauth.model.User user = userRepository.findByUsername(username);
+    CustomUser user = userRepository.findByUsername(username);
     if (user == null) {
       throw new UsernameNotFoundException("Utilisateur non trouvé avec le nom d'utilisateur: " + username);
     }
@@ -25,11 +29,34 @@ public class UserService {
         .build();
   }
 
-  public List<com.example.todowithauth.model.User> getAllUsers() {
-    return userRepository.findAll();
+  public List<CustomUserDTO> getAllUsers() {
+    List<CustomUser> users = userRepository.findAll();
+    return users.stream()
+        .map(this::convertToDTO)
+        .collect(Collectors.toList());
   }
 
-  public com.example.todowithauth.model.User saveUser(com.example.todowithauth.model.User user) {
-    return userRepository.save(user);
+  public CustomUserDTO saveUser(CustomUserDTO userDTO) {
+    CustomUser user = convertToEntity(userDTO);
+    CustomUser savedUser = userRepository.save(user);
+    return convertToDTO(savedUser);
+  }
+
+  // Méthode pour convertir une entité User en DTO
+  private CustomUserDTO convertToDTO(CustomUser user) {
+    CustomUserDTO userDTO = new CustomUserDTO();
+    userDTO.setId(user.getId());
+    userDTO.setUsername(user.getUsername());
+    userDTO.setEmail(user.getEmail());
+    return userDTO;
+  }
+
+  // Méthode pour convertir un DTO en entité User
+  private CustomUser convertToEntity(CustomUserDTO userDTO) {
+    CustomUser user = new CustomUser();
+    user.setId(userDTO.getId());
+    user.setUsername(userDTO.getUsername());
+    user.setEmail(userDTO.getEmail());
+    return user;
   }
 }

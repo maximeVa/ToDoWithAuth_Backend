@@ -1,6 +1,6 @@
 package com.example.todowithauth.controller;
 
-import com.example.todowithauth.model.Task;
+import com.example.todowithauth.dto.TaskDTO;
 import com.example.todowithauth.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +15,13 @@ public class TaskController {
   private TaskService taskService;
 
   @GetMapping("/")
-  public List<Task> getAllTasks() {
+  public List<TaskDTO> getAllTasks() {
     return taskService.getAllTasks();
   }
 
   @PostMapping("/")
-  public Task createTask(@RequestBody Task task) {
-    return taskService.saveTask(task);
+  public TaskDTO createTask(@RequestBody TaskDTO taskDTO) {
+    return taskService.saveTask(taskDTO);
   }
 
   @DeleteMapping("/{id}")
