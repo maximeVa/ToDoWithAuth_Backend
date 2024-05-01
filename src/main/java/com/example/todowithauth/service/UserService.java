@@ -3,6 +3,7 @@ package com.example.todowithauth.service;
 import com.example.todowithauth.dto.CustomUserDTO;
 import com.example.todowithauth.model.CustomUser;
 import com.example.todowithauth.repository.UserRepository;
+import com.example.todowithauth.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +18,9 @@ public class UserService {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private JwtTokenUtil jwtTokenUtil;
 
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     CustomUser user = userRepository.findByUsername(username);
@@ -58,5 +62,9 @@ public class UserService {
     user.setUsername(userDTO.getUsername());
     user.setEmail(userDTO.getEmail());
     return user;
+  }
+
+  public String generateToken(CustomUser user) {
+    return jwtTokenUtil.generateAccessToken(user);
   }
 }

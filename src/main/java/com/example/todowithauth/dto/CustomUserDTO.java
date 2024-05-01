@@ -12,4 +12,11 @@ public class CustomUserDTO {
   private Long id;
   private String username;
   private String email;
+  private String password;
+  private String token;
+
+  public CustomUserDTO(String username, String email) {
+    this.username = username;
+    this.email = email;
+  }
 }
