@@ -28,4 +28,16 @@ public class TaskController {
   public void deleteTask(@PathVariable Long id) {
     taskService.deleteTask(id);
   }
+
+  /*
+  *
+  * Méthode d'exemple pour cas Admin
+  *
+  @Secured("ROLE_ADMIN")
+  @GetMapping("/admin")
+  public List<TaskDTO> getAllTasksForAdmin() {
+    // Méthode accessible uniquement aux utilisateurs ayant le rôle "ADMIN"
+    return taskService.getAllTasksForAdmin();
+  }
+   */
 }

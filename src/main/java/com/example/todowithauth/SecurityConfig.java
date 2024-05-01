@@ -18,20 +18,20 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
   @Autowired
   private UserService userService;
 
-  @Override
-  public void configure(HttpSecurity http) throws Exception {
-    http
-        .authorizeHttpRequests() // Use authorizeHttpRequests instead of authorizeRequests
-        .requestMatchers("/public/**").permitAll()
-        .requestMatchers("/admin/**").hasRole("ADMIN")
-        .anyRequest().authenticated()
-        .and()
-        .formLogin() // Use builder pattern for formLogin
-        .loginPage("/login")
-        .and()
-        .logout() // Use builder pattern for logout
-        .logoutUrl("/logout");
-  }
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+      http
+          .authorizeHttpRequests() // Use authorizeHttpRequests instead of authorizeRequests
+          .requestMatchers("/login", "/public/**", "/users/").permitAll()
+          //.requestMatchers("/admin/**").hasRole("ADMIN")
+          .anyRequest().authenticated()
+          .and()
+          .formLogin() // Use builder pattern for formLogin
+          .loginPage("/login")
+          .and()
+          .logout() // Use builder pattern for logout
+          .logoutUrl("/logout");
+    }
 
   @Bean
   public CustomAuthenticationProvider customAuthenticationProvider() {
