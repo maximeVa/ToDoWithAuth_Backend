@@ -4,16 +4,17 @@ import com.example.todowithauth.dto.CustomUserDTO;
 import com.example.todowithauth.model.CustomUser;
 import com.example.todowithauth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
 public class AuthController {
 
   @Autowired
@@ -36,6 +37,18 @@ public class AuthController {
       responseUser.setToken(token);
     }
     return ResponseEntity.ok(responseUser);
+  }
+
+  @PostMapping("/register")
+  public ResponseEntity<String> register(@RequestBody CustomUserDTO userDTO) {
+    // Call UserService method to register the user with DTO
+    boolean registrationSuccess = userService.saveUser(userDTO);
+
+    if (registrationSuccess) {
+      return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+    } else {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to register user");
+    }
   }
 
   // You can add methods for register and logout here

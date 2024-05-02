@@ -18,9 +18,4 @@ public class UserController {
   public List<CustomUserDTO> getAllUsers() {
     return userService.getAllUsers();
   }
-
-  @PostMapping("/")
-  public CustomUserDTO createUser(@RequestBody CustomUserDTO userDTO) {
-    return userService.saveUser(userDTO);
-  }
 }

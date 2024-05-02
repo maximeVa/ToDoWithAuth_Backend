@@ -29,4 +29,10 @@ import lombok.Setter;
   private String password; // Hashed password
 
   private String roles; // Comma-separated string representing roles
+
+  public CustomUser(String username, String email, String password) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+  }
 }
