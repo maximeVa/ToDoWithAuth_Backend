@@ -5,7 +5,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
+@Component
+@Setter
 public class JwtTokenUtil {
 
   private String secret; // Replace with your secret key

@@ -22,6 +22,7 @@ public class UserService {
   @Autowired
   private JwtTokenUtil jwtTokenUtil;
 
+
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     CustomUser user = userRepository.findByUsername(username);
     if (user == null) {
@@ -29,7 +30,7 @@ public class UserService {
     }
     return User.withUsername(user.getUsername())
         .password(user.getPassword())
-        .roles(/* Ajoute les rôles de l'utilisateur ici si nécessaire */)
+        .roles(user.getRoles())
         .build();
   }
 
