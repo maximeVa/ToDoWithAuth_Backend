@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 
@@ -17,6 +16,9 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -37,12 +39,7 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
   public CustomAuthenticationProvider customAuthenticationProvider() {
     CustomAuthenticationProvider authProvider = new CustomAuthenticationProvider();
     authProvider.setUserService(userService);
-    authProvider.setPasswordEncoder(passwordEncoder());
+    authProvider.setPasswordEncoder(passwordEncoder);
     return authProvider;
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
   }
 }
